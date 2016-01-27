@@ -111,76 +111,69 @@
 	    value: true
 	});
 
-	var _properties = __webpack_require__(3);
+	var _product = __webpack_require__(3);
 
-	var _properties2 = _interopRequireDefault(_properties);
+	var _product2 = _interopRequireDefault(_product);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Slide = function () {
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Slide = function (_Product) {
+	    _inherits(Slide, _Product);
+
 	    function Slide(el) {
 	        _classCallCheck(this, Slide);
 
-	        this.props = new _properties2.default(el);
-	        this.props.removeWrapper = this.props.el.querySelector('.inbasket-btns');
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Slide).call(this, el));
 
-	        this.setupEventHandlers();
+	        _this.removeWrapper = _this.el.querySelector('.inbasket-btns');
+
+	        _this.setupEventHandlers();
+	        return _this;
 	    }
 
 	    _createClass(Slide, [{
 	        key: 'setupEventHandlers',
 	        value: function setupEventHandlers() {
-	            this.props.addBtn.addEventListener('click', this.addClickHandler.bind(this));
-	            this.props.removeBtn.addEventListener('click', this.removeClickHandler.bind(this));
-	            this.props.addBtn.addEventListener('animationend', this.animationEndHandler.bind(this));
-	            this.props.removeWrapper.addEventListener('animationend', this.animationEndHandler.bind(this));
+	            this.addBtn.addEventListener('click', this.addClickHandler.bind(this));
+	            this.removeBtn.addEventListener('click', this.removeClickHandler.bind(this));
+	            this.addBtn.addEventListener('animationend', this.animationEndHandler.bind(this));
+	            this.removeWrapper.addEventListener('animationend', this.animationEndHandler.bind(this));
+	            this.input.addEventListener('change', this.inputChange.bind(this));
 	        }
 	    }, {
-	        key: 'addClickHandler',
-	        value: function addClickHandler(e) {
-	            e.preventDefault();
-	            var classList = this.props.actionsEl.classList;
-	            this.props.productCount += 1;
-	            if (!classList.contains(this.props.className)) {
+	        key: 'onQtychange',
+	        value: function onQtychange(newQty) {
+	            this.updateProductCount(newQty);
+
+	            var classList = this.actionsEl.classList;
+	            if (this.productCount > 0 && !classList.contains(this.className)) {
 	                classList.add('slide-in');
-	                this.props.addBtn.innerHTML = '&plus;';
-	                classList.add(this.props.className);
+	                this.addBtn.innerHTML = '&plus;';
+	                classList.add(this.className);
+	            } else if (this.productCount === 0) {
+	                classList.add('slide-out');
+	                this.addBtn.innerHTML = 'Add';
+	                classList.remove(this.className);
 	            }
 	            this.updateInputValue();
 	        }
 	    }, {
-	        key: 'removeClickHandler',
-	        value: function removeClickHandler(e) {
-	            e.preventDefault();
-	            var classList = this.props.actionsEl.classList;
-	            if (this.props.productCount > 0) {
-	                this.props.productCount -= 1;
-	                if (this.props.productCount === 0) {
-	                    classList.add('slide-out');
-	                    this.props.addBtn.innerHTML = 'Add';
-	                    classList.remove(this.props.className);
-	                }
-	                this.updateInputValue();
-	            }
-	        }
-	    }, {
-	        key: 'updateInputValue',
-	        value: function updateInputValue() {
-	            this.props.input.value = this.props.productCount;
-	        }
-	    }, {
 	        key: 'animationEndHandler',
 	        value: function animationEndHandler() {
-	            var classList = this.props.actionsEl.classList;
+	            var classList = this.actionsEl.classList;
 	            classList.remove('slide-in');
 	            classList.remove('slide-out');
 	        }
 	    }]);
 
 	    return Slide;
-	}();
+	}(_product2.default);
 
 	exports.default = Slide;
 
@@ -190,25 +183,61 @@
 
 	'use strict';
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Properties = function Properties(el) {
-	    _classCallCheck(this, Properties);
+	var Product = function () {
+	    function Product(el) {
+	        _classCallCheck(this, Product);
 
-	    this.className = 'in-basket';
-	    this.el = el;
-	    this.actionsEl = this.el.querySelector('.actions');
-	    this.productCount = 0;
-	    this.addBtn = this.el.querySelector('.btn.add');
-	    this.removeBtn = this.el.querySelector('.btn.remove');
-	    this.input = this.el.querySelector('.actions input');
-	};
+	        this.className = 'in-basket';
+	        this.el = el;
+	        this.actionsEl = this.el.querySelector('.actions');
+	        this.productCount = 0;
+	        this.addBtn = this.el.querySelector('.btn.add');
+	        this.removeBtn = this.el.querySelector('.btn.remove');
+	        this.input = this.el.querySelector('.actions input');
+	    }
 
-	exports.default = Properties;
+	    _createClass(Product, [{
+	        key: 'updateProductCount',
+	        value: function updateProductCount(newQty) {
+	            this.productCount = Math.max(0, newQty);
+	        }
+	    }, {
+	        key: 'inputChange',
+	        value: function inputChange(evt) {
+	            evt.preventDefault();
+	            this.onQtychange(parseInt(evt.target.value, 10));
+	        }
+	    }, {
+	        key: 'addClickHandler',
+	        value: function addClickHandler(e) {
+	            e.preventDefault();
+	            this.onQtychange(this.productCount + 1);
+	        }
+	    }, {
+	        key: 'removeClickHandler',
+	        value: function removeClickHandler(e) {
+	            e.preventDefault();
+	            this.onQtychange(this.productCount - 1);
+	        }
+	    }, {
+	        key: 'updateInputValue',
+	        value: function updateInputValue() {
+	            this.input.value = this.productCount;
+	        }
+	    }]);
+
+	    return Product;
+	}();
+
+	exports.default = Product;
 
 /***/ },
 /* 4 */
@@ -222,78 +251,70 @@
 	    value: true
 	});
 
-	var _properties = __webpack_require__(3);
+	var _product = __webpack_require__(3);
 
-	var _properties2 = _interopRequireDefault(_properties);
+	var _product2 = _interopRequireDefault(_product);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Dip = function () {
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Dip = function (_Product) {
+	    _inherits(Dip, _Product);
+
 	    function Dip(el) {
 	        _classCallCheck(this, Dip);
 
-	        this.props = new _properties2.default(el);
-	        this.setupEventHandlers();
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Dip).call(this, el));
+
+	        _this.setupEventHandlers();
+	        return _this;
 	    }
 
 	    _createClass(Dip, [{
 	        key: 'setupEventHandlers',
 	        value: function setupEventHandlers() {
-	            this.props.addBtn.addEventListener('click', this.addClickHandler.bind(this));
-	            this.props.removeBtn.addEventListener('click', this.removeClickHandler.bind(this));
-	            this.props.actionsEl.addEventListener('animationend', this.animationEndHandler.bind(this));
+	            this.addBtn.addEventListener('click', this.addClickHandler.bind(this));
+	            this.removeBtn.addEventListener('click', this.removeClickHandler.bind(this));
+	            this.actionsEl.addEventListener('animationend', this.animationEndHandler.bind(this));
+	            this.input.addEventListener('change', this.inputChange.bind(this));
 	        }
 	    }, {
-	        key: 'addClickHandler',
-	        value: function addClickHandler(e) {
-	            e.preventDefault();
-	            var classList = this.props.actionsEl.classList;
-	            this.props.productCount += 1;
-	            if (!classList.contains(this.props.className)) {
+	        key: 'onQtychange',
+	        value: function onQtychange(newQty) {
+	            this.updateProductCount(newQty);
+
+	            var classList = this.actionsEl.classList;
+	            if (this.productCount > 0 && !classList.contains(this.className)) {
 	                classList.add('dip');
 	                setTimeout(function () {
-	                    classList.add(this.props.className);
-	                    this.props.addBtn.innerHTML = '&plus;';
+	                    classList.add(this.className);
+	                    this.addBtn.innerHTML = '&plus;';
+	                }.bind(this), 135);
+	            } else if (this.productCount === 0) {
+	                classList.add('dip');
+	                setTimeout(function () {
+	                    classList.remove(this.className);
+	                    this.addBtn.innerHTML = 'Add';
+	                    this.updateInputValue();
 	                }.bind(this), 135);
 	            }
 	            this.updateInputValue();
 	        }
 	    }, {
-	        key: 'removeClickHandler',
-	        value: function removeClickHandler(e) {
-	            e.preventDefault();
-	            var classList = this.props.actionsEl.classList;
-	            if (this.props.productCount > 0) {
-	                this.props.productCount -= 1;
-	                if (this.props.productCount === 0) {
-	                    classList.add('dip');
-	                    setTimeout(function () {
-	                        classList.remove(this.props.className);
-	                        this.props.addBtn.innerHTML = 'Add';
-	                        this.updateInputValue();
-	                    }.bind(this), 135);
-	                } else {
-	                    this.updateInputValue();
-	                }
-	            }
-	        }
-	    }, {
-	        key: 'updateInputValue',
-	        value: function updateInputValue() {
-	            this.props.input.value = this.props.productCount;
-	        }
-	    }, {
 	        key: 'animationEndHandler',
 	        value: function animationEndHandler() {
-	            var classList = this.props.actionsEl.classList;
+	            var classList = this.actionsEl.classList;
 	            classList.remove('dip');
 	        }
 	    }]);
 
 	    return Dip;
-	}();
+	}(_product2.default);
 
 	exports.default = Dip;
 
@@ -309,84 +330,77 @@
 	    value: true
 	});
 
-	var _properties = __webpack_require__(3);
+	var _product = __webpack_require__(3);
 
-	var _properties2 = _interopRequireDefault(_properties);
+	var _product2 = _interopRequireDefault(_product);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Nudge = function () {
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Nudge = function (_Product) {
+	    _inherits(Nudge, _Product);
+
 	    function Nudge(el) {
 	        var prevEl = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 	        var nextEl = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
 
 	        _classCallCheck(this, Nudge);
 
-	        this.props = new _properties2.default(el);
-	        this.props.prevElActions = prevEl && prevEl.querySelector('.actions');
-	        this.props.nextElActions = nextEl && nextEl.querySelector('.actions');
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Nudge).call(this, el));
 
-	        this.setupEventHandlers();
+	        _this.prevElActions = prevEl && prevEl.querySelector('.actions');
+	        _this.nextElActions = nextEl && nextEl.querySelector('.actions');
+
+	        _this.setupEventHandlers();
+	        return _this;
 	    }
 
 	    _createClass(Nudge, [{
 	        key: 'setupEventHandlers',
 	        value: function setupEventHandlers() {
-	            this.props.addBtn.addEventListener('click', this.addClickHandler.bind(this));
-	            this.props.removeBtn.addEventListener('click', this.removeClickHandler.bind(this));
-	            this.props.actionsEl.addEventListener('animationend', this.addAnimationHandler.bind(this));
+	            this.addBtn.addEventListener('click', this.addClickHandler.bind(this));
+	            this.removeBtn.addEventListener('click', this.removeClickHandler.bind(this));
+	            this.actionsEl.addEventListener('animationend', this.animationEndHandler.bind(this));
+	            this.input.addEventListener('change', this.inputChange.bind(this));
 	        }
 	    }, {
 	        key: 'animateNeighbours',
 	        value: function animateNeighbours() {
-	            if (this.props.prevElActions) {
-	                var classList = this.props.prevElActions.classList;
+	            if (this.prevElActions) {
+	                var classList = this.prevElActions.classList;
 	                classList.add('nudge-left');
 	            }
-	            if (this.props.nextElActions) {
-	                var classList = this.props.nextElActions.classList;
+	            if (this.nextElActions) {
+	                var classList = this.nextElActions.classList;
 	                classList.add('nudge-right');
 	            }
 	        }
 	    }, {
-	        key: 'addClickHandler',
-	        value: function addClickHandler(e) {
-	            e.preventDefault();
-	            var classList = this.props.actionsEl.classList;
-	            this.props.productCount += 1;
-	            if (!classList.contains(this.props.className)) {
-	                this.props.addBtn.innerHTML = '&plus;';
+	        key: 'onQtychange',
+	        value: function onQtychange(newQty) {
+	            this.updateProductCount(newQty);
+
+	            var classList = this.actionsEl.classList;
+	            if (this.productCount > 0 && !classList.contains(this.className)) {
+	                this.addBtn.innerHTML = '&plus;';
 	                this.animateNeighbours();
-	                classList.add(this.props.className);
+	                classList.add(this.className);
+	            } else if (this.productCount === 0) {
+	                this.addBtn.innerHTML = 'Add';
+	                this.animateNeighbours();
+	                classList.remove(this.className);
 	            }
 	            this.updateInputValue();
 	        }
 	    }, {
-	        key: 'removeClickHandler',
-	        value: function removeClickHandler(e) {
-	            e.preventDefault();
-	            var classList = this.props.actionsEl.classList;
-	            if (this.props.productCount > 0) {
-	                this.props.productCount -= 1;
-	                if (this.props.productCount === 0) {
-	                    this.props.addBtn.innerHTML = 'Add';
-	                    this.animateNeighbours();
-	                    classList.remove(this.props.className);
-	                }
-	                this.updateInputValue();
-	            }
-	        }
-	    }, {
-	        key: 'updateInputValue',
-	        value: function updateInputValue() {
-	            this.props.input.value = this.props.productCount;
-	        }
-	    }, {
-	        key: 'addAnimationHandler',
-	        value: function addAnimationHandler(evt) {
-	            var classList = this.props.actionsEl.classList;
+	        key: 'animationEndHandler',
+	        value: function animationEndHandler(evt) {
+	            var classList = this.actionsEl.classList;
 	            if (evt.animationName === 'nudge-left') {
 	                classList.remove('nudge-left');
 	            } else if (evt.animationName === 'nudge-right') {
@@ -396,7 +410,7 @@
 	    }]);
 
 	    return Nudge;
-	}();
+	}(_product2.default);
 
 	exports.default = Nudge;
 
