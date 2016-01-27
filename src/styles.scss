@@ -1,0 +1,268 @@
+html,
+body {
+  box-sizing: content-box;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+body {
+  padding: 0 20px;
+  background-color: #f2f2f2;
+}
+
+h1 {
+  color: #424242;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance:textfield;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  width: 880px;
+}
+
+section {
+  display: flex;
+
+  > h1 {
+    width: 200px;
+    text-align: right;
+    margin-right: 40px;
+  }
+}
+
+.slide {
+  .inbasket-btns {
+    position: absolute;
+    left: 2.4%;
+  }
+  .remove {
+    margin-right: 1.9%;
+  }
+
+  .add {
+    z-index: 10;
+  }
+}
+
+.dip,
+.nudge {
+  .remove {
+    margin-right: 2.4%;
+  }
+}
+
+.fp {
+  background-color: #f9f9f9;
+  position: relative;
+  padding: 10px 0;
+  width: 25%;
+  overflow: hidden;
+
+  img {
+    display: block;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  &:not(:first-of-type) {
+    border-left: 1px solid #ebebeb;
+  }
+}
+
+.product-name {
+  display: block;
+  padding: 3px 6px;
+  color: #333;
+  text-align: center;
+  margin: 10px 0 20px;
+}
+
+.actions {
+  margin: 0 auto;
+  padding: 0 5px;
+  font-size: 1.2rem;
+  position: relative;
+
+  .btn,
+  input {
+    font-size: inherit;
+    padding: 0.4em 0;
+    text-align: center;
+    border-radius: 4px;
+    line-height: 1.2;
+  }
+
+  input {
+    border: 1px solid #D6D6D6;
+    text-align: center;
+    vertical-align: bottom;
+  }
+
+  .add {
+    float: right;
+    width: 100%;
+    position: relative;
+  }
+
+  .add,
+  .remove {
+    border-top: 1px solid transparent;
+  }
+
+  input,
+  .remove {
+    display: none;
+    float: left;
+  }
+}
+
+.actions.slide-in {
+  .inbasket-btns {
+    animation: slide-in-remove 270ms ease;
+  }
+
+  .add {
+    animation: slide-in-add 270ms ease;
+  }
+}
+
+.actions.slide-out {
+  .inbasket-btns {
+    animation: slide-out-remove 270ms ease;
+  }
+
+  .add {
+    animation: slide-out-add 270ms ease;
+  }
+
+  input,
+  .remove {
+    display: inline-block;
+    width: 24.509803922%;
+  }
+}
+
+.inbasket-btns {
+  position: relative;
+  left: 0%;
+}
+
+.actions.dip {
+  animation: dip 270ms ease;
+}
+
+.actions.nudge-left {
+  animation: nudge-left 200ms ease;
+}
+
+.actions.nudge-right {
+  animation: nudge-right 200ms ease;
+}
+
+.in-basket {
+  input,
+  .remove {
+    width: 24.509803922%;
+    display: inline-block;
+  }
+
+  .add {
+    width: 44.94474%;
+  }
+
+  .btn {
+    background-color: #F6D03D;
+    border-bottom: 1px solid #DAB84C;
+
+    &:hover {
+      background-color: #F1CD44;
+    }
+    &:active {
+      background-color: #EAC347;
+    }
+  }
+}
+
+.btn {
+  display: inline-block;
+  background-color: #EFEBE9;
+  text-decoration: none;
+  color: #705F1B;
+  border-bottom: 1px solid #D7CCC8;
+
+  &:hover {
+    background-color: #F6D03D;
+  }
+}
+
+@keyframes dip {
+  0%, 100% {
+    bottom: 0;
+  }
+  50% {
+    bottom: -70px;
+  }
+}
+
+@keyframes nudge-left {
+  0%, 100% {
+    left: 0;
+  }
+  50% {
+    left: -5px;
+  }
+}
+
+@keyframes nudge-right {
+  0%, 100% {
+    right: 0;
+  }
+  50% {
+    right: -5px;
+  }
+}
+
+@keyframes slide-in-remove {
+  0% {
+    left: -55%;
+  }
+  100% {
+    left: 2.4%;
+  }
+}
+
+@keyframes slide-out-remove {
+  0% {
+    left: 2.4%;
+  }
+  100% {
+    left: -55%;
+  }
+}
+
+@keyframes slide-in-add {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 44.94474%;
+  }
+}
+
+@keyframes slide-out-add {
+  0% {
+    width: 44.94474%;
+  }
+  100% {
+    width: 100%;
+  }
+}
